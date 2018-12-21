@@ -12,3 +12,7 @@ class ComicFeed:
 
         # Feed data
         self.entries = rss.entries
+
+        # Relevant feed details
+        self.feed = rss.feed
+        self.count = len(self.entries)
