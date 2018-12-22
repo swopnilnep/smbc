@@ -16,3 +16,7 @@ class ComicFeed:
         # Relevant feed details
         self.feed = rss.feed
         self.count = len(self.entries)
+
+        # Relevant feed information
+        self.title = self.feed.title
+        self.language = self.feed.language
