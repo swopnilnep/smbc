@@ -20,3 +20,6 @@ class ComicFeed:
         # Relevant feed information
         self.title = self.feed.title
         self.language = self.feed.language
+        self.subtitle = self.feed.subtitle
+        self.link = self.feed.link
+
