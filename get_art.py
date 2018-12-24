@@ -23,3 +23,6 @@ class ComicFeed:
         self.subtitle = self.feed.subtitle
         self.link = self.feed.link
 
+    def get_comic(self, cindex):
+        return Comic(self.entries[cindex])
+
