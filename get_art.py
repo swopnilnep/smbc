@@ -26,3 +26,6 @@ class ComicFeed:
     def get_comic(self, cindex):
         return Comic(self.entries[cindex])
 
+    def __str__(self):
+        return str({'name':self.title, 'entries':self.count, 'language':self.language, 'link':self.link})
+
