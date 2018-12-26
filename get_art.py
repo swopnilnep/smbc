@@ -29,3 +29,7 @@ class ComicFeed:
     def __str__(self):
         return str({'name':self.title, 'entries':self.count, 'language':self.language, 'link':self.link})
 
+class Comic:
+    def __init__(self, comic):
+        self.title = comic.title
+        self.date = comic.published
