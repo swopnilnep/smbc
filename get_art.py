@@ -33,3 +33,6 @@ class Comic:
     def __init__(self, comic):
         self.title = comic.title
         self.date = comic.published
+        self.link = comic.id
+        self.image = comic.summary
+
