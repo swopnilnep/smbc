@@ -3,7 +3,6 @@
 
 from feedparser import parse
 from random import randrange
-from xml.dom import minidom
 
 class ComicFeed:
     '''Comic Feed Class'''
@@ -33,13 +32,15 @@ class Comic:
     def __init__(self, comic):
         self.title = comic.title
         self.date = comic.published
-        self.link = comic.id
-        self.image = comic.summary
+        self.link = comic.id        
+        self.image = parse(comic.summary)['feed']['img']['src']
 
 def main():
     smbc_link = 'https://www.smbc-comics.com/comic/rss'
     smbc_feed = ComicFeed(smbc_link)
-    print(smbc_feed.get_comic(2).image)
+    img = smbc_feed.get_comic(2).image
+
+    print(img)
 
 if __name__=="__main__":
     main()
