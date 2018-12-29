@@ -3,6 +3,7 @@
 
 from feedparser import parse
 from random import randrange
+import requests
 
 class ComicFeed:
     '''Comic Feed Class'''
@@ -35,12 +36,15 @@ class Comic:
         self.link = comic.id        
         self.image = parse(comic.summary)['feed']['img']['src']
 
+    def download(self):
+        f = open(self.title+'.png', 'wb')
+        f.write(requests.get(self.image).content)
+        f.close()
+
 def main():
     smbc_link = 'https://www.smbc-comics.com/comic/rss'
     smbc_feed = ComicFeed(smbc_link)
-    img = smbc_feed.get_comic(2).image
-
-    print(img)
+    smbc_feed.get_comic(1).download()
 
 if __name__=="__main__":
     main()
