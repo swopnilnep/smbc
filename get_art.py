@@ -37,7 +37,7 @@ class Comic:
         self.image = parse(comic.summary)['feed']['img']['src']
 
     def download(self):
-        f = open(self.title+'.png', 'wb')
+        f = open('images/'+self.title+'.png', 'wb')
         f.write(requests.get(self.image).content)
         f.close()
 
