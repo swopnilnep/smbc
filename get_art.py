@@ -4,7 +4,6 @@
 from feedparser import parse
 from random import randrange
 import requests
-
 class ComicFeed:
     '''Comic Feed Class'''
     def __init__(self, feed_link:str):
@@ -25,6 +24,15 @@ class ComicFeed:
 
     def get_comic(self, cindex):
         return Comic(self.entries[cindex])
+
+    @property
+    def random(self):
+        index = randrange(self.count)
+        return self.get_comic(index)
+
+    @property
+    def latest(self):
+        return self.get_comic(0)
 
     def __str__(self):
         return str({'name':self.title, 'entries':self.count, 'language':self.language, 'link':self.link})
