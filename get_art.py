@@ -4,6 +4,8 @@
 from feedparser import parse
 from random import randrange
 import requests
+
+smbc_link = 'https://www.smbc-comics.com/comic/rss'
 class ComicFeed:
     '''Comic Feed Class'''
     def __init__(self, feed_link:str):
@@ -25,6 +27,13 @@ class ComicFeed:
     def get_comic(self, cindex):
         return Comic(self.entries[cindex])
 
+    def download_all(self):
+        for entry in range(self.count):
+            comic = self.get_comic(entry)
+            print("Getting comic {} out of {}..".format(entry, self.count))
+            comic.download()
+        print("Download complete")
+
     @property
     def random(self):
         index = randrange(self.count)
@@ -36,7 +45,6 @@ class ComicFeed:
 
     def __str__(self):
         return str({'name':self.title, 'entries':self.count, 'language':self.language, 'link':self.link})
-
 class Comic:
     def __init__(self, comic):
         self.title = comic.title
@@ -45,14 +53,14 @@ class Comic:
         self.image = parse(comic.summary)['feed']['img']['src']
 
     def download(self):
-        f = open('images/'+self.title+'.png', 'wb')
+        rename = self.title.split('-')[1].strip()
+        f = open('images/'+rename+'.png', 'wb')
         f.write(requests.get(self.image).content)
         f.close()
 
 def main():
-    smbc_link = 'https://www.smbc-comics.com/comic/rss'
-    smbc_feed = ComicFeed(smbc_link)
-    smbc_feed.get_comic(1).download()
+    smbc = ComicFeed(smbc_link)
+    smbc.download_all()
 
 if __name__=="__main__":
     main()
