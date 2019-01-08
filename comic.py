@@ -4,8 +4,6 @@
 from feedparser import parse
 from random import randrange
 import requests
-
-smbc_link = 'https://www.smbc-comics.com/comic/rss'
 class ComicFeed:
     '''Comic Feed Class'''
     def __init__(self, feed_link:str):
@@ -20,7 +18,10 @@ class ComicFeed:
 
         # Relevant feed information
         self.title = self.feed.title
-        self.language = self.feed.language
+        try:
+             self.language = self.feed.language
+        except:
+            self.language = None
         self.subtitle = self.feed.subtitle
         self.link = self.feed.link
 
@@ -30,7 +31,7 @@ class ComicFeed:
     def download_all(self):
         for entry in range(self.count):
             comic = self.get_comic(entry)
-            print("Getting comic {} out of {}..".format(entry, self.count))
+            print("Getting comic {} out of {}..".format(entry+1, self.count))
             comic.download()
         print("Download complete")
 
@@ -53,14 +54,27 @@ class Comic:
         self.image = parse(comic.summary)['feed']['img']['src']
 
     def download(self):
-        rename = self.title.split('-')[1].strip()
+        # Renaming scheme for smbc comics
+        if '-' in self.title:
+            rename = self.title.split('-')[1].strip()
+        else: 
+            rename = self.title
+
         f = open('images/'+rename+'.png', 'wb')
         f.write(requests.get(self.image).content)
         f.close()
 
 def main():
-    smbc = ComicFeed(smbc_link)
-    smbc.download_all()
+    smbc_link = 'https://www.smbc-comics.com/comic/rss'
+    xkcd_link = 'https://www.xkcd.com/rss.xml'
+    calh_link = 'https://www.comicsrss.com/rss/calvinandhobbes.rss'
+    dilb_link = 'https://www.comicsrss.com/rss/dilbert.rss'
 
+    smbc = ComicFeed(smbc_link)
+    xkcd = ComicFeed(xkcd_link)
+    calh = ComicFeed(calh_link)
+    dilb = ComicFeed(dilb_link)
+    
+    dilb.download_all()
 if __name__=="__main__":
     main()
