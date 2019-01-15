@@ -36,3 +36,10 @@ class Comic:
         self.link = comic.id
         self.image = comic.summary
 
+def main():
+    smbc_link = 'https://www.smbc-comics.com/comic/rss'
+    smbc_feed = ComicFeed(smbc_link)
+    print(smbc_feed.get_comic(2).image)
+
+if __name__=="__main__":
+    main()
