@@ -75,6 +75,6 @@ def main():
     calh = ComicFeed(calh_link)
     dilb = ComicFeed(dilb_link)
     
-    dilb.download_all()
+    xkcd.download_all()
 if __name__=="__main__":
     main()
